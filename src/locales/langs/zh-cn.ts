@@ -162,7 +162,13 @@ const local: App.I18n.Schema = {
     404: '页面不存在',
     500: '服务器错误',
     'iframe-page': '外链页面',
-    home: '首页'
+    home: '首页',
+    'agent-library': '代理库',
+    'knowledge-base': '知识库',
+    questionnaires: '问卷列表',
+    questionnaire_details: '问卷详情',
+    questionnaire: '问卷',
+    dashboard: '首页概览'
   },
   page: {
     login: {
@@ -239,6 +245,29 @@ const local: App.I18n.Schema = {
         desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
       },
       creativity: '创意'
+    },
+    dashboard: {
+      welcome: {
+        title: '欢迎回来', // 修改为欢迎语
+        currentDate: '当前日期',
+        todoItems: '您有 {count} 项待办事项',
+        systemHealth: '系统健康状态'
+      },
+      welcomeMessage: '欢迎使用智能合规平台',
+      yourKnowledge: '知识库概览',
+      questionnairePipeline: '问卷处理进度',
+      businessImpact: '业务影响分析',
+      frequentKnowledge: '高频知识库',
+      needsAttention: {
+        title: '',
+        items: {
+          training: '',
+          approval: '',
+          compliance: ''
+        },
+        descriptions: '',
+        status: ''
+      }
     }
   },
   form: {

@@ -172,6 +172,8 @@ const routeMap: RouteMap = {
   "iframe-page": "/iframe-page/:url",
   "knowledge-base": "/knowledge-base",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
+  "questionnaire": "/questionnaire",
+  "questionnaire_details": "/questionnaire/details/:id",
   "questionnaires": "/questionnaires"
 };
 

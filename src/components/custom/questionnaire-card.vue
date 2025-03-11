@@ -1,10 +1,12 @@
 <!-- src/components/QuestionnaireCard.vue -->
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import { Icon } from '@iconify/vue';
 import { formatDate } from '@/utils/date';
 import { useMembers } from '@/composables/useMembers';
 import type { Questionnaire, QuestionnaireType } from '@/types/questionnaires';
 
+const router = useRouter();
 defineProps<{
   data: Questionnaire;
 }>();
@@ -50,10 +52,16 @@ const getTypeConfig = (type: QuestionnaireType) => {
     }
   );
 };
+const handleClick = (id: string) => {
+  router.push({
+    name: 'questionnaire_details',
+    params: { id }
+  });
+};
 </script>
 
 <template>
-  <NCard hoverable class="questionnaire-card" @click="$emit('click')">
+  <NCard hoverable class="questionnaire-card" @click="handleClick(data.id)">
     <NSpace vertical :size="12">
       <NText strong>{{ data.customerName }}</NText>
 

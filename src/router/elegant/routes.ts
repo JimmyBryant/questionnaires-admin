@@ -107,6 +107,28 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'questionnaire',
+    path: '/questionnaire',
+    component: 'layout.base',
+    meta: {
+      title: 'questionnaire',
+      i18nKey: 'route.questionnaire',
+      hideInMenu: true
+    },
+    children: [
+      {
+        name: 'questionnaire_details',
+        path: '/questionnaire/details/:id',
+        component: 'view.questionnaire_details',
+        meta: {
+          title: 'questionnaire_details',
+          i18nKey: 'route.questionnaire_details',
+          hideInMenu: true
+        }
+      }
+    ]
+  },
+  {
     name: 'questionnaires',
     path: '/questionnaires',
     component: 'layout.base$view.questionnaires',

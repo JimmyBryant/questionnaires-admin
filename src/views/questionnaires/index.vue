@@ -7,7 +7,7 @@ import { mockQuestionnaires, statusConfigs } from './mocks';
 
 // 响应式状态
 const activeTab = ref<'inProgress' | 'all'>('inProgress');
-const activeStatus = ref('processing');
+const activeStatus = ref('Processing');
 const showModal = ref(false);
 
 // 计算属性

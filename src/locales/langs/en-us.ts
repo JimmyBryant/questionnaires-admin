@@ -163,17 +163,63 @@ const local: App.I18n.Schema = {
     500: 'Server Error',
     'iframe-page': 'Iframe',
     home: 'Home',
-    dashboard: 'DashBoard'
+    dashboard: 'DashBoard',
+    'agent-library': 'Agent Library',
+    'knowledge-base': 'Knowledge Base',
+    questionnaires: 'Questionnaires',
+    questionnaire_details: 'Questionnaire Details',
+    questionnaire: 'Questionnaire'
   },
   page: {
     dashboard: {
-      "welcome": "Welcome Back,",
-      "welcomeMessage": "Here's your daily overview",
-      "needsAttention": "Needs Attention",
-      "yourKnowledge": "Your Knowledge",
-      "questionnairePipeline": "Questionnaire Pipeline",
-      "businessImpact": "Business Impact",
-      "frequentKnowledge": "Frequently Used Knowledge"
+      welcome: {
+        title: 'Welcome Back',
+        currentDate: 'Current Date',
+        todoItems: 'You have {count} pending items',
+        systemHealth: 'System Health'
+      },
+      attention: {
+        title: 'Needs Attention',
+        items: {
+          training: 'Pending Training',
+          approval: 'Approval Required',
+          compliance: 'Compliance Check'
+        },
+        descriptions: {
+          training: '{count} safety trainings expiring soon',
+          approval: '{count} questionnaires pending approval',
+          compliance: '3 compliance issues need resolution'
+        },
+        status: {
+          urgent: 'Urgent',
+          pending: 'Pending',
+          warning: 'Warning'
+        }
+      },
+      knowledge: {
+        title: 'Knowledge Progress',
+        categories: {
+          safety: 'Safety Policies',
+          operations: 'Operations',
+          regulations: 'Regulations',
+          gdpr: 'GDPR Compliance'
+        }
+      },
+      questionnaire: {
+        title: 'Questionnaire Pipeline',
+        stages: {
+          design: 'Design Phase',
+          collection: 'Data Collection',
+          analysis: 'Analysis',
+          reporting: 'Reporting'
+        }
+      },
+      business: {
+        impact: 'Business Impact',
+        revenue: 'Revenue Impact',
+        efficiency: 'Efficiency Gain',
+        risk: 'Risk Reduction'
+      }
     },
 
     login: {

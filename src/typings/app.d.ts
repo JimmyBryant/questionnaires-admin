@@ -409,9 +409,23 @@ declare namespace App {
       route: Record<I18nRouteKey, string>;
       page: {
         dashboard: {
-          welcome: string;
+          welcome: {
+            title: string;
+            currentDate: string;
+            todoItems: string; // 实际使用时应为带参数类型，这里简化为 string
+            systemHealth: string;
+          };
           welcomeMessage: string;
-          needsAttention: string;
+          needsAttention: {
+            title: string;
+            items: {
+              training: string;
+              approval: string;
+              compliance: string;
+            };
+            descriptions: string;
+            status: string;
+          };
           yourKnowledge: string;
           questionnairePipeline: string;
           businessImpact: string;

@@ -24,5 +24,6 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   dashboard: () => import("@/views/dashboard/index.vue"),
   home: () => import("@/views/home/index.vue"),
   "knowledge-base": () => import("@/views/knowledge-base/index.vue"),
+  questionnaire_details: () => import("@/views/questionnaire/details/[id].vue"),
   questionnaires: () => import("@/views/questionnaires/index.vue"),
 };

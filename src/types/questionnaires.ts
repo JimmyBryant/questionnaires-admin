@@ -1,4 +1,69 @@
 // src/types/questionnaire.ts
+// types/questionnaires.d.ts
+
+// 问题类型枚举
+export type QuestionType =
+  | 'radio' // 单选题
+  | 'checkbox' // 多选题
+  | 'textarea' // 文本题
+  | 'dropdown' // 下拉选择题
+  | 'rating'; // 评分题
+
+// 问题选项类型
+export interface QuestionOption {
+  label: string; // 显示文本
+  value: string; // 实际值
+  icon?: string; // 可选图标
+}
+
+// 基础问题结构
+export interface BaseQuestion {
+  id: string;
+  title: string;
+  type: QuestionType;
+  required?: boolean; // 是否必填
+  description?: string; // 问题描述
+}
+
+// 选择题扩展
+export interface ChoiceQuestion extends BaseQuestion {
+  options: QuestionOption[];
+  allowCustom?: boolean; // 是否允许自定义答案
+}
+
+// 文本题扩展
+export interface TextQuestion extends BaseQuestion {
+  maxLength?: number; // 最大字符数
+  placeholder?: string; // 输入提示
+}
+
+// 评分题扩展
+export interface RatingQuestion extends BaseQuestion {
+  scale: number; // 评分等级（如5分制）
+  labels?: string[]; // 各分数描述
+}
+
+export type QuestionStatus = 'approved' | 'readyToApprove' | 'flagged' | 'answered' | 'unAnswered';
+
+// 联合问题类型
+export interface Question {
+  id: string;
+  text: string;
+  answer?: string;
+  status: QuestionStatus;
+}
+
+// 问卷元数据
+export interface QuestionnaireMeta {
+  id: string;
+  title?: string;
+  /** 当前状态 */
+  status: QuestionnaireStatus;
+  createdBy?: string;
+  createdAt?: number; // 时间戳
+  updatedAt?: number;
+  dueDate?: number; // 截止时间
+}
 
 /** 问卷状态类型 */
 export type QuestionnaireStatus = 'Processing' | 'Started' | 'Ready for Review' | 'Approved' | 'Completed';
@@ -7,18 +72,9 @@ export type QuestionnaireStatus = 'Processing' | 'Started' | 'Ready for Review' 
 export type QuestionnaireType = 'Security' | 'Compliance' | 'GDPR' | 'SOC 2' | 'Vendor' | 'Custom';
 
 /** 问卷实体接口 */
-export interface Questionnaire {
-  /** 唯一标识符 */
-  id: string;
-
-  /** 当前状态 */
-  status: QuestionnaireStatus;
-
+export interface Questionnaire extends QuestionnaireMeta {
   /** 客户/潜在客户名称 */
   customerName: string;
-
-  /** 截止时间（时间戳） */
-  dueDate: number;
 
   /** 主要负责人ID */
   assignee: string;
@@ -41,11 +97,9 @@ export interface Questionnaire {
   /** 内部备注 */
   notes?: string;
 
-  /** 创建时间（时间戳） */
-  createdAt: number;
+  questions?: Question[];
 
-  /** 最后更新时间（时间戳） */
-  updatedAt: number;
+  answers?: Record<string, string[]>; // 答案存储 { questionId: answers[] }
 }
 
 /** 问卷状态配置接口 */
