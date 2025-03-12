@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { NH1, useMessage } from 'naive-ui';
+import { NH1, NText, useMessage } from 'naive-ui';
 import { Icon } from '@iconify/vue';
 import request from 'axios'; // 使用项目配置的 axios 实例
+import { status } from 'nprogress';
 import type { Question, Questionnaire } from '@/types/questionnaires';
 
 const route = useRoute();
@@ -19,13 +20,28 @@ const excelData = ref([
   ['Q3', 'Risk Assessment', 'Text Input', 'Open Response']
 ]);
 
-// 状态颜色配置
+// 状态颜色配置（移除progress属性，flagged使用橙色系）
 const statusColors = {
-  approved: { type: 'success', color: '#52c41a' }, // 批准 - 绿色
-  readyToApprove: { type: 'info', color: '#1890ff' }, // 待批准 - 蓝色
-  flagged: { type: 'error', color: '#ff4d4f' }, // 标记 - 红色
-  answered: { type: 'warning', color: '#faad14' }, // 已答 - 橙色
-  unanswered: { type: 'default', color: '#d9d9d9' } // 未答 - 灰色
+  approved: {
+    type: 'success',
+    color: '#7dbd84' // 柔和的青绿色
+  },
+  readyToApprove: {
+    type: 'info',
+    color: '#4a90e2' // 深天蓝色
+  },
+  answered: {
+    type: 'primary',
+    color: '#48c7a8' // 蓝绿色
+  },
+  flagged: {
+    type: 'warning',
+    color: '#ffa726' // 橙色系（Material Orange 400）
+  },
+  unAnswered: {
+    type: 'default',
+    color: '#cfd8dc' // 浅灰蓝色
+  }
 } as const;
 
 // 计算状态数量
@@ -35,7 +51,7 @@ const statusCounts = computed(() => {
     readyToApprove: 0,
     flagged: 0,
     answered: 0,
-    unanswered: 0,
+    unAnswered: 0,
     total: 0
   };
 
@@ -108,21 +124,38 @@ onMounted(fetchData);
                     </NGi>
                     <NGi>
                       <NStatistic label="Created By">
-                        <div class="flex items-center">
+                        <div>
                           <Icon icon="mdi:account" class="mr-2" />
                           <NText class="text-sm">{{ questionnaire.assignee }}</NText>
                         </div>
                       </NStatistic>
                     </NGi>
                     <NGi>
-                      <NStatistic label="Last Updated">
-                        <NText class="text-sm">{{ new Date(questionnaire.updatedAt).toLocaleDateString() }}</NText>
+                      <NStatistic label="Created Date">
+                        <NText class="text-sm">{{ new Date(questionnaire.createdAt).toLocaleDateString() }}</NText>
                       </NStatistic>
                     </NGi>
                   </NGrid>
                 </NCard>
                 <!-- 问题统计卡片 -->
                 <NCard title="Question Status">
+                  <!-- 进度条 -->
+                  <div class="progress-container">
+                    <div class="mb-2">
+                      <NText strong>Questions {{ statusCounts.total }}</NText>
+                    </div>
+                    <div class="progress-bar">
+                      <div
+                        v-for="[statusKey, config] in Object.entries(statusColors)"
+                        :key="config.type"
+                        class="progress-segment"
+                        :style="{
+                          width: (statusCounts[statusKey] / statusCounts.total) * 100 + '%',
+                          backgroundColor: config['color']
+                        }"
+                      ></div>
+                    </div>
+                  </div>
                   <div class="status-grid">
                     <NTag
                       v-for="[statusKey, config] in Object.entries(statusColors)"
@@ -250,11 +283,27 @@ svg {
 .status-count {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 12px;
-  padding: 4px 10px;
+  padding: 4px;
+  margin-left: 4px;
   font-weight: 700;
   font-size: 13px;
 }
-
+.progress-container {
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    .progress-segment {
+      height: 100%;
+      &:last-child {
+        flex: 1;
+      }
+    }
+  }
+}
 /* 暗黑模式适配 */
 .dark .status-tag[data-status='unanswered'] {
   --n-color: #434343;

@@ -17,7 +17,7 @@ const STATUS_WEIGHTS = {
   unAnswered: 3
 };
 
-const weightedPick = (items: { value: string; weight: number }[]): QuestionStatus => {
+const weightedPick = (items: { value: QuestionStatus; weight: number }[]): QuestionStatus => {
   const totalWeight = items.reduce((sum, item) => sum + item.weight, 0);
   let random = Math.random() * totalWeight;
 
@@ -59,7 +59,11 @@ const fillPlaceholders = (template: string) => {
 };
 
 const generateQuestion = (index: number): Question => {
-  const status = weightedPick(Object.entries(STATUS_WEIGHTS).map(([value, weight]) => ({ value, weight })));
+  // 使用 as const 断言确保 STATUS_WEIGHTS 中的键是 QuestionStatus 类型
+  const statusEntries = Object.entries(STATUS_WEIGHTS) as [QuestionStatus, number][];
+  const statusItems = statusEntries.map(([value, weight]) => ({ value, weight }));
+
+  const status = weightedPick(statusItems);
 
   return {
     id: `QID-${index + Mock.Random.uuid().slice(0, 8)}`,
@@ -70,14 +74,27 @@ const generateQuestion = (index: number): Question => {
 };
 
 // 问卷生成器
-const generateBaseQuestionnaire = (): Questionnaire => ({
-  ...Mock.mock({
-    customerName: Mock.Random.pick(['Biogen', 'Novartis', 'Pfizer', 'Moderna']),
-    progress: Mock.Random.integer(0, 100),
-    createdAt: Mock.Random.date('yyyy-MM-dd')
-  }),
-  questions: Array.from({ length: Mock.Random.integer(50, 100) }, (_, i) => generateQuestion(i + 1))
-});
+const generateBaseQuestionnaire = (): Questionnaire => {
+  const createdAt = new Date().toISOString().split('T')[0]; // 今天的日期 (YYYY-MM-DD)
+
+  // 确保 dueDate 在未来 10 ~ 90 天
+  const generateFutureDate = (daysOffset: number): string => {
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + daysOffset);
+    return futureDate.toISOString().split('T')[0];
+  };
+
+  return {
+    ...Mock.mock({
+      customerName: Mock.Random.pick(['Biogen', 'Novartis', 'Pfizer', 'Moderna']),
+      progress: Mock.Random.integer(0, 100),
+      assignee: Mock.Random.pick(['John Doe', 'Jane Smith', 'Alice Brown', 'Bob Green']),
+      createdAt, // 确保 createdAt 是今天
+      dueDate: generateFutureDate(Mock.Random.integer(10, 90)) // 未来 10~90 天的随机日期
+    }),
+    questions: Array.from({ length: Mock.Random.integer(50, 100) }, (_, i) => generateQuestion(i + 1))
+  };
+};
 
 // 创建初始问卷池（包含所有状态）
 const questionnairePool: Questionnaire[] = [

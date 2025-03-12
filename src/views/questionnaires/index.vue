@@ -23,12 +23,6 @@ const statusQuestionnaires = computed(() => {
 
 const allQuestionnaires = computed(() => mockQuestionnaires);
 
-// 事件处理
-const handleCardClick = (item: Questionnaire) => {
-  console.log('Selected questionnaire:', item);
-  // 实际开发中跳转到详情页
-};
-
 const showCreateModal = () => {
   showModal.value = true;
 };
@@ -168,7 +162,7 @@ const handleSubmit = async (e: Event) => {
             <NSpace vertical :size="24">
               <NGrid v-if="statusQuestionnaires[status.value].length > 0" x-gap="12" y-gap="16" cols="1 640:2 1024:3">
                 <NGi v-for="item in statusQuestionnaires[status.value]" :key="item.id">
-                  <QuestionnaireCard :data="item" @click="handleCardClick(item)" />
+                  <QuestionnaireCard :data="item" />
                 </NGi>
               </NGrid>
 
