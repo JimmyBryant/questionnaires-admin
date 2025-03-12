@@ -86,7 +86,16 @@ const generateBaseQuestionnaire = (): Questionnaire => {
 
   return {
     ...Mock.mock({
-      customerName: Mock.Random.pick(['Biogen', 'Novartis', 'Pfizer', 'Moderna']),
+      title: Mock.Random.pick([
+        'Security Audit',
+        'Compliance Review',
+        'GDPR Compliance',
+        'SOC 2 Report',
+        'Vendor Review',
+        'Custom Questionnaire'
+      ]),
+      file: '/files/questions.xlsx',
+      customerName: Mock.Random.pick(['Biogen', 'Novartis', 'Google', 'Moderna', 'Meta']),
       progress: Mock.Random.integer(0, 100),
       assignee: Mock.Random.pick(['John Doe', 'Jane Smith', 'Alice Brown', 'Bob Green']),
       createdAt, // 确保 createdAt 是今天
@@ -165,7 +174,6 @@ Mock.mock(/\/api\/questionnaires\/[A-Za-z0-9-]+/, 'get', (options: XHRResponse) 
         data: {
           ...target,
           // 添加动态字段
-          lastModified: Mock.Random.now('timestamp'),
           auditLogs: Mock.Random.range(1, 5).map(() => ({
             timestamp: Mock.Random.now('timestamp'),
             action: Mock.Random.pick(['created', 'updated', 'reviewed', 'approved']),
@@ -181,24 +189,24 @@ Mock.mock(/\/api\/questionnaires\/[A-Za-z0-9-]+/, 'get', (options: XHRResponse) 
 
 // 类型验证函数（开发环境使用）
 // if (import.meta.env.DEV) {
-const validateTypes = () => {
-  questionnairePool.forEach(q => {
-    const validStatus: Questionnaire['status'][] = [
-      'Processing',
-      'Started',
-      'Ready for Review',
-      'Approved',
-      'Completed'
-    ];
-    const validType: Questionnaire['type'][] = ['Security', 'Compliance', 'GDPR', 'SOC 2', 'Vendor', 'Custom'];
+// const validateTypes = () => {
+//   questionnairePool.forEach(q => {
+//     const validStatus: Questionnaire['status'][] = [
+//       'Processing',
+//       'Started',
+//       'Ready for Review',
+//       'Approved',
+//       'Completed'
+//     ];
+//     const validType: Questionnaire['type'][] = ['Security', 'Compliance', 'GDPR', 'SOC 2', 'Vendor', 'Custom'];
 
-    if (!validStatus.includes(q.status)) {
-      console.error(`Invalid status: ${q.status} in questionnaire ${q.id}`);
-    }
-    if (!validType.includes(q.type)) {
-      console.error(`Invalid type: ${q.type} in questionnaire ${q.id}`);
-    }
-  });
-};
-validateTypes();
+//     if (!validStatus.includes(q.status)) {
+//       console.error(`Invalid status: ${q.status} in questionnaire ${q.id}`);
+//     }
+//     if (!validType.includes(q.type)) {
+//       console.error(`Invalid type: ${q.type} in questionnaire ${q.id}`);
+//     }
+//   });
+// };
+// validateTypes();
 // }

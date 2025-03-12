@@ -415,21 +415,38 @@ declare namespace App {
             todoItems: string; // 实际使用时应为带参数类型，这里简化为 string
             systemHealth: string;
           };
-          welcomeMessage: string;
-          needsAttention: {
+          attention: {
             title: string;
             items: {
               training: string;
               approval: string;
               compliance: string;
             };
-            descriptions: string;
+            descriptions: {
+              training: string;
+              approval: string;
+              compliance: string;
+            };
             status: string;
           };
-          yourKnowledge: string;
-          questionnairePipeline: string;
-          businessImpact: string;
-          frequentKnowledge: string;
+          knowledge: {
+            title: string;
+            categories: {
+              safety: string;
+              operations: string;
+              regulations: string;
+              gdpr: string;
+            };
+          };
+          questionnaire: {
+            title: string;
+          };
+          business: {
+            impact: string;
+            revenue: string;
+            efficiency: string;
+            risk: string;
+          };
         };
         login: {
           common: {

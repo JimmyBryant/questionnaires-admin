@@ -248,25 +248,42 @@ const local: App.I18n.Schema = {
     },
     dashboard: {
       welcome: {
-        title: '欢迎回来', // 修改为欢迎语
+        title: '欢迎回来',
         currentDate: '当前日期',
-        todoItems: '您有 {count} 项待办事项',
-        systemHealth: '系统健康状态'
+        todoItems: '你有 {count} 个待处理事项',
+        systemHealth: '系统健康'
       },
-      welcomeMessage: '欢迎使用智能合规平台',
-      yourKnowledge: '知识库概览',
-      questionnairePipeline: '问卷处理进度',
-      businessImpact: '业务影响分析',
-      frequentKnowledge: '高频知识库',
-      needsAttention: {
-        title: '',
+      attention: {
+        title: '需要关注',
         items: {
-          training: '',
-          approval: '',
-          compliance: ''
+          training: '待培训',
+          approval: '需要审批',
+          compliance: '合规检查'
         },
-        descriptions: '',
-        status: ''
+        descriptions: {
+          training: '有 {count} 个合规问题需要解决',
+          approval: '有 {count} 个合规问题需要解决',
+          compliance: '有 {count} 个合规问题需要解决'
+        },
+        status: '警告'
+      },
+      knowledge: {
+        title: '知识进展',
+        categories: {
+          safety: '安全政策',
+          operations: '运营',
+          regulations: '法规',
+          gdpr: 'GDPR 合规'
+        }
+      },
+      questionnaire: {
+        title: '问卷流程'
+      },
+      business: {
+        impact: '业务影响',
+        revenue: '收入影响',
+        efficiency: '效率提升',
+        risk: '风险降低'
       }
     }
   },

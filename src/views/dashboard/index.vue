@@ -48,6 +48,33 @@ const dashboardData = reactive({
     risk: 18
   }
 });
+// 辅助函数：获取标签类型
+// const getTagType = (status: string): 'error' | 'warning' | 'info' => {
+//   switch (status) {
+//     case 'urgent':
+//       return 'error';
+//     case 'warning':
+//       return 'warning';
+//     default:
+//       return 'info';
+//   }
+// };
+
+// 辅助函数：获取时间线项类型
+const getTimelineItemType = (status: string): 'info' | 'success' | 'warning' | 'error' | 'default' => {
+  switch (status) {
+    case 'success':
+      return 'success';
+    case 'info':
+      return 'info';
+    case 'warning':
+      return 'warning';
+    case 'error':
+      return 'error';
+    default:
+      return 'default';
+  }
+};
 </script>
 
 <template>
@@ -90,7 +117,7 @@ const dashboardData = reactive({
               :type="item.status === 'urgent' ? 'error' : item.status === 'warning' ? 'warning' : 'info'"
               size="small"
             >
-              {{ $t(`page.dashboard.attention.status.${item.status}`) }}
+              {{ item.status }}
             </NTag>
             <NText depth="3" class="ml-2">{{ item.description }}</NText>
           </NThing>
@@ -124,7 +151,7 @@ const dashboardData = reactive({
             <NTimelineItem
               v-for="stage in dashboardData.questionnaireStages"
               :key="stage.id"
-              :type="stage.status"
+              :type="getTimelineItemType(stage.status)"
               :title="$t(`page.dashboard.questionnaire.stages.${stage.name}`)"
               :content="stage.date"
             >
@@ -192,7 +219,7 @@ const dashboardData = reactive({
   --n-font-size: 14px;
 }
 
-svg{
+svg {
   display: inline-block;
 }
 </style>

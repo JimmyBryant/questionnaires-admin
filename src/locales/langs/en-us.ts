@@ -175,7 +175,7 @@ const local: App.I18n.Schema = {
       welcome: {
         title: 'Welcome Back',
         currentDate: 'Current Date',
-        todoItems: 'You have {count} pending items',
+        todoItems: 'You have {count} pending itms',
         systemHealth: 'System Health'
       },
       attention: {
@@ -186,15 +186,11 @@ const local: App.I18n.Schema = {
           compliance: 'Compliance Check'
         },
         descriptions: {
-          training: '{count} safety trainings expiring soon',
-          approval: '{count} questionnaires pending approval',
-          compliance: '3 compliance issues need resolution'
+          training: '{count} compliance issues need resolution',
+          approval: '{count} compliance issues need resolution',
+          compliance: '{count} compliance issues need resolution'
         },
-        status: {
-          urgent: 'Urgent',
-          pending: 'Pending',
-          warning: 'Warning'
-        }
+        status: 'Warning'
       },
       knowledge: {
         title: 'Knowledge Progress',
@@ -206,13 +202,7 @@ const local: App.I18n.Schema = {
         }
       },
       questionnaire: {
-        title: 'Questionnaire Pipeline',
-        stages: {
-          design: 'Design Phase',
-          collection: 'Data Collection',
-          analysis: 'Analysis',
-          reporting: 'Reporting'
-        }
+        title: 'Questionnaire Pipeline'
       },
       business: {
         impact: 'Business Impact',

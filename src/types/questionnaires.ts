@@ -47,7 +47,7 @@ export type QuestionStatus = 'approved' | 'readyToApprove' | 'flagged' | 'answer
 
 // 联合问题类型
 export interface Question {
-  id: string;
+  id: string | number;
   text: string;
   answer?: string;
   status: QuestionStatus;

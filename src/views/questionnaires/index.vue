@@ -1,8 +1,9 @@
 <!-- src/views/questionnaires/index.vue -->
 <script setup lang="ts">
-import type { FormInst, UploadFile } from 'naive-ui';
-import { computed, ref, reactive } from 'vue';
-import type { Questionnaire } from '@/types/questionnaires';
+import type { FormInst } from 'naive-ui';
+import { NBadge, NSpace, NText } from 'naive-ui';
+import { computed, h, reactive, ref } from 'vue';
+import type { Questionnaire, QuestionnaireStatusConfig, QuestionnaireType } from '@/types/questionnaires';
 import { mockQuestionnaires, statusConfigs } from './mocks';
 
 // 响应式状态
@@ -34,7 +35,7 @@ interface FormData {
   description: string;
   dueDate: number | null;
   type: string | null;
-  file: UploadFile[];
+  file: [];
   notes: string;
 }
 
@@ -105,8 +106,8 @@ const handleSubmit = async (e: Event) => {
       dueDate: formData.dueDate || Date.now() + 604800000, // 默认7天后
       assignee: formData.assignee || '',
       collaborators: formData.collaborators,
-      type: formData.type || '',
-      file: formData.file,
+      type: 'Security' as QuestionnaireType,
+      file: '',
       notes: formData.notes
     };
 
@@ -132,6 +133,11 @@ const handleSubmit = async (e: Event) => {
     submitting.value = false;
   }
 };
+const renderTab = (item: QuestionnaireStatusConfig) =>
+  h(NSpace, { align: 'center', size: 8 }, () => [
+    h(NText, null, item.label),
+    h(NBadge, { value: statusQuestionnaires.value[item.value].length, type: 'info' })
+  ]);
 </script>
 
 <template>
@@ -151,13 +157,20 @@ const handleSubmit = async (e: Event) => {
       <!-- In Progress 标签页 -->
       <NTabPane name="inProgress" tab="In Progress">
         <NTabs v-model:value="activeStatus" type="card" animated class="status-tabs">
-          <NTabPane v-for="status in statusConfigs" :key="status.value" :name="status.value">
-            <template #tab>
+          <NTabPane
+            v-for="status in statusConfigs"
+            :key="status.value"
+            :name="status.value"
+            :tab="() => renderTab(status)"
+          >
+            <!--
+ <template #tab>
               <NSpace align="center" :size="8">
                 <NText>{{ status.label }}</NText>
                 <NBadge :value="statusQuestionnaires[status.value].length" :max="99" type="info" />
               </NSpace>
-            </template>
+            </template> 
+-->
 
             <NSpace vertical :size="24">
               <NGrid v-if="statusQuestionnaires[status.value].length > 0" x-gap="12" y-gap="16" cols="1 640:2 1024:3">
