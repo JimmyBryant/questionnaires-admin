@@ -92,7 +92,7 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'knowledge-base',
       i18nKey: 'route.knowledge-base',
-      icon:'mdi:lightbulb-outline'
+      icon: 'mdi:lightbulb-outline'
     }
   },
   {
