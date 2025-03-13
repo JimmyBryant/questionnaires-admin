@@ -46,7 +46,7 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'agent-library',
       i18nKey: 'route.agent-library',
-      icon: 'mdi:file-document-outline',
+      icon: 'mdi:robot-outline',
       order: 2
     }
   },
@@ -91,7 +91,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.knowledge-base',
     meta: {
       title: 'knowledge-base',
-      i18nKey: 'route.knowledge-base'
+      i18nKey: 'route.knowledge-base',
+      icon:'mdi:lightbulb-outline'
     }
   },
   {
