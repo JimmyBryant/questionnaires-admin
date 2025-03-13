@@ -64,6 +64,17 @@ const rules = {
   dueDate: {
     required: true,
     trigger: ['blur', 'change'],
+    validator(_rule: unknown, value: number) {
+      // 添加自定义验证逻辑
+      if (value === null || value <= 0) {
+        return new Error('Due date is required');
+      }
+      // 可添加额外时间验证（可选）
+      if (value < Date.now()) {
+        return new Error('Due date must be in the future');
+      }
+      return true;
+    },
     message: 'Due date is required'
   },
   customerName: {
